@@ -4,6 +4,8 @@ const {
     remote
 } = require('electron');
 
+let driverPhoto;
+
 app.config(function ($routeProvider) {
     $routeProvider
         .when('/', {
@@ -112,40 +114,59 @@ app.controller('addDriverCtrl', function ($scope, $location) {
     }
 
     // Image Selection
-    $scope.selectImg = function () {
-        var {
-            dialog
-        } = remote;
+    $scope.selectImg = function (e) {
 
-        selectedImg = null;
+        driverPhoto = document.getElementById('image').files[0];
+        
 
-        dialog.showOpenDialog({
-            properties: ['openFile'],
-            filters: [{
-                name: 'image',
-                extensions: ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG']
-            }]
-        }, function (file) {
-            console.log(file);
-        });
+
+        // var {
+        //     dialog
+        // } = remote;
+
+        // selectedImg = null;
+
+        // dialog.showOpenDialog({
+        //     properties: ['openFile'],
+        //     filters: [{
+        //         name: 'image',
+        //         extensions: ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG']
+        //     }]
+        // }, function (file) {
+        //     console.log(file);
+        // });
     }
 
     //Save Button
     $scope.add = function () {
-        db.collection('drivers').add({
-            ad: $scope.ad,
-            soyad: $scope.soyad,
-            adres: $scope.adres,
-            telefon: $scope.telefon,
-            email: $scope.email,
-            image: $scope.image,
-            // aracdurumu: $scope.aracdurumu
-        }).then(() => {
-            console.log('ekleme basarili');
-            alert('Sürücü Ekleme Başarılı');
-        }).catch(err => {
-            console.log(err.message);
-        })
+
+        const imagePath = '/driversPhoto/' + $scope.ad + $scope.soyad + $scope.telefon;
+        const imageRef = storage.ref(imagePath);
+        driverPhoto = document.getElementById('image').files[0];
+        console.log(driverPhoto);
+        const uploadImage = imageRef.put(driverPhoto);
+        let downloadURL;
+        uploadImage.then(e => {
+            imageRef.getDownloadURL().then(url => {
+                downloadURL = url
+                db.collection('drivers').add({
+                    ad: $scope.ad,
+                    soyad: $scope.soyad,
+                    adres: $scope.adres,
+                    telefon: $scope.telefon,
+                    email: $scope.email,
+                    photoURL: downloadURL
+                    // aracdurumu: $scope.aracdurumu
+                }).then(() => {
+                    console.log('ekleme basarili');
+                    alert('Sürücü Ekleme Başarılı');
+                }).catch(err => {
+                    console.log(err.message);
+                })
+            });
+        });
+
+        
     }
 
     // Listing
@@ -167,6 +188,7 @@ app.controller('addDriverCtrl', function ($scope, $location) {
     //     }
     // })
 });
+
 // Total Drivers Controller
 app.controller('totalDriversCtrl', function ($scope, $location) {
 
