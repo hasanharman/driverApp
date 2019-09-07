@@ -1,0 +1,79 @@
+<head>
+    <link href="assets/dashboard.css" rel="stylesheet">
+</head>
+
+<body>
+    <h1>Sürücü Ekleme</h1>
+
+    <div class="outer-menu">
+        <input class="checkbox-toggle" type="checkbox" />
+        <div class="hamburger">
+            <div></div>
+        </div>
+        <div class="menu">
+            <div>
+                <div>
+                    <ul>
+                        <li><a ng-click="home()">Anasayfa</a></li>
+                        <li><a ng-click="adddriver()">Sürücü Ekle</a></li>
+                        <li><a ng-click="totaldrivers()">Kayıtlı Sürücüler</a></li>
+                        <li><a ng-click="notifications()">Bildirimler</a></li>
+                        <li><a ng-click="exit()">Çıkış</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <form>
+            <h2>Kişisel Bilgiler</h2>
+            <div class="form-group">
+                <label for="ad">Ad</label>
+                <input type="text" class="form-control" id="ad" ng-model="ad" />
+            </div>
+
+            <div class="form-group">
+                <label for="soyad">Soyad</label>
+                <input type="text" class="form-control" id="soyad" ng-model="soyad" />
+            </div>
+            <div class="form-group">
+                <label for="adres">Adres</label>
+                <input type="text" class="form-control" id="adres" ng-model="adres" />
+            </div>
+            <div class="form-group">
+                <label for="telefon">Telefon Numarası</label>
+                <input type="number" class="form-control" id="telefon" ng-model="telefon" />
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" ng-model="email" />
+            </div>
+            <!-- <div class="form-group">
+                <label for="image">Image</label>
+                <input type="image" class="form-control" id="image" ng-model="image" ng-click="selectImg()" />
+            </div> -->
+
+            <button class="form-group" id="image" ng-click="selectImg()" ng-model="image">Fotoğraf Seç
+            </button>
+            <br>
+            <!-- <div class="form-group">
+                <label for="sirketaraci">Araç Durumu</label> <br>
+                <input type="radio" name="aracdurumu" value="sirketaraci" checked>Şirket Aracı<br>
+                <input type="radio" name="aracdurumu" value="sözlesmeli">Sözleşmeli<br>
+            </div> -->
+
+
+            <button type="submit" class="btn btn-warning" ng-click="add()">Kaydet</button>
+            <button type="submit" class="btn btn-success" ng-click="deneme()" id="deneme">Deneme</button>
+        </form><br />
+
+        <!-- Yazdırma Fonksiyonu
+        <h3>Liste</h3>
+        <div>
+            <ul id="ul" class="list-group">
+            </ul>
+        </div> -->
+    </div>
+    <script src="/scripts/dashboard.js"></script>
+</body>
