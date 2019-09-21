@@ -2,8 +2,8 @@
     <link href="assets/dashboard.css" rel="stylesheet">
 </head>
 
-<body>
-    <h1>Sürücü Takip Uygulaması</h1>
+<body ng-conroller="dashboardCtrl">
+    <h1 class="headingMain">Sürücü Takip Uygulaması</h1>
 
     <div class="outer-menu">
         <input class="checkbox-toggle" type="checkbox" />
@@ -24,8 +24,6 @@
             </div>
         </div>
     </div>
-
-
     <script>
         const electron = require('electron');
         const {

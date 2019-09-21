@@ -2,8 +2,8 @@
     <link href="assets/dashboard.css" rel="stylesheet">
 </head>
 
-<body>
-    <h1>Tüm Sürücüler</h1>
+<body ng-conroller="totalDriversCtrl">
+    <h1 class="headingMain">Tüm Sürücüler</h1>
 
     <div class="outer-menu">
         <input class="checkbox-toggle" type="checkbox" />
@@ -25,13 +25,44 @@
         </div>
     </div>
 
+    <!-- 
+    <h3>Toplam Sürücü Sayısı:</h3>
+    <div>
+        <p ng-model="Ldays.name">{{driverNumber}}</p>
+    </div> -->
 
-    <script>
-        const electron = require('electron');
-        const {
-            ipcRenderer
-        } = electron;
-    </script>
+    <!-- <li ng-repeat="item in items" ng-click="accordion.current = item.name">
+        {{item.name}}
+        <ul ng-show="accordion.current == item.name">
+            <li ng-repeat="sub in item.sub">{{sub.name}}</li>
+        </ul>
+    </li> -->
+    <div class="container totalDrivers">
+        <h2>Sürücü Listesi</h2>
+
+        <div id="driver-list"></div>
+        <!-- 
+    <button class="accordion">Section 1</button>
+    <div class="panel">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat.</p>
+    </div>
+
+    <button class="accordion">Section 2</button>
+    <div class="panel">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat.</p>
+    </div>
+
+    <button class="accordion">Section 3</button>
+    <div class="panel">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat.</p>
+    </div> -->
+    </div>
 
     <script src="/scripts/dashboard.js"></script>
 </body>

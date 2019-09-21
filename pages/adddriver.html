@@ -2,8 +2,8 @@
     <link href="assets/dashboard.css" rel="stylesheet">
 </head>
 
-<body>
-    <h1>Sürücü Ekleme</h1>
+<body ng-conroller="addDriverCtrl">
+    <h1 class="headingMain">Sürücü Ekleme</h1>
 
     <div class="outer-menu">
         <input class="checkbox-toggle" type="checkbox" />
@@ -25,55 +25,120 @@
         </div>
     </div>
 
-    <div class="container">
+    <div class="container addDriver">
         <form>
-            <h2>Kişisel Bilgiler</h2>
-            <div class="form-group">
-                <label for="ad">Ad</label>
-                <input type="text" class="form-control" id="ad" ng-model="ad" />
+            <div class="personalInf" ng-model="personalInf" ng-show="showval">
+                <h2>Kişisel Bilgiler</h2>
+                <div class="form-group">
+                    <label for="ad">Ad</label>
+                    <input type="text" class="form-control" id="ad" ng-model="ad" />
+                </div>
+                <div class="form-group">
+                    <label for="soyad">Soyad</label>
+                    <input type="text" class="form-control" id="soyad" ng-model="soyad" />
+                </div>
+                <div class="form-group">
+                    <label for="adres">Adres</label>
+                    <input type="text" class="form-control" id="adres" ng-model="adres" />
+                </div>
+                <div class="form-group">
+                    <label for="telefon">Telefon Numarası</label>
+                    <input type="number" class="form-control" id="telefon" ng-model="telefon" />
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" ng-model="email" />
+                </div>
+
+                <label for='image'>Fotoğraf Seç</label>
+                <input type='file' class="form-group" ng-click="selectImg()" id="image" ng-model="image">
+
+                <br>
+
+                <div class="form-group">
+                    <label for="sirketaraci">Araç Durumu</label><br>
+                    <input type="radio" name="aracdurumu" value="sirketaraci" checked>Şirket Aracı<br>
+                    <input type="radio" name="aracdurumu" value="sözlesmeli">Sözleşmeli<br>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="soyad">Soyad</label>
-                <input type="text" class="form-control" id="soyad" ng-model="soyad" />
-            </div>
-            <div class="form-group">
-                <label for="adres">Adres</label>
-                <input type="text" class="form-control" id="adres" ng-model="adres" />
-            </div>
-            <div class="form-group">
-                <label for="telefon">Telefon Numarası</label>
-                <input type="number" class="form-control" id="telefon" ng-model="telefon" />
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" ng-model="email" />
-            </div>
-            <!-- <div class="form-group">
-                <label for="image">Image</label>
-                <input type="image" class="form-control" id="image" ng-model="image" ng-click="selectImg()" />
-            </div> -->
-            <label for='image' >Fotoğraf Seç</label>
-            <input type='file' class="form-group" ng-click="selectImg()" id="image" ng-model="image">
 
-            <br>
-            <!-- <div class="form-group">
-                <label for="sirketaraci">Araç Durumu</label> <br>
-                <input type="radio" name="aracdurumu" value="sirketaraci" checked>Şirket Aracı<br>
-                <input type="radio" name="aracdurumu" value="sözlesmeli">Sözleşmeli<br>
-            </div> -->
+            <div class="driverInf" ng-hide="hideval">
+                <h2>Sürücü Bilgileri</h2>
+                <div class="form-group">
+                    <label for="src">SRC Belgesi</label><br>
+                    <input type="radio" name="src" value="srcVar" checked>Var<br>
+                    <input type="radio" name="src" value="srcYok">Yok<br>
+                    <section>
+                        <span style="color:blue">Belgenin süresinin dolmasına:</span>
+                        <span style="color:red">{{days()}}</span> <span style="color:blue">gün kaldı</span>
+                        <!-- <span style="color:green">Today's Date is : {{ today }}</span>  -->
+                    </section>
+                </div>
+                <div class="form-group">
+                    <label for="srcDate">SRC Geçerlilik Tarihi</label>
+                    <input type="date" class="form-control" id="srcDate" ng-model="srcDate"><br>
+                </div>
 
+                <!-- <div class="form-group">
+                    <label for="src">Psikoteknik Belgesi</label><br>
+                    <input type="radio" name="psico" value="psicoVar" checked>Var<br>
+                    <input type="radio" name="psico" value="psicoYok">Yok<br>
+                </div>
+                <div class="form-group">
+                    <label for="psicoDate">Psikoteknik Geçerlilik Tarihi</label>
+                    <input type="date" class="form-control" id="psicoDate" ng-model="psicoDate"><br>
+                </div> -->
+                <div>
+                    <p type="text" id="tarih" ng-model="days().name">{{days()}}</p>
+                </div>
+            </div>
 
-            <button type="submit" class="btn btn-warning" ng-click="add()">Kaydet</button>
-            <button type="submit" class="btn btn-success" ng-click="deneme()" id="deneme">Deneme</button>
+            <div class="carInf" ng-hide="hideval2">
+                <h2>AraçBilgileri</h2>
+                <div class="form-group">
+                    <label for="carModel">Araç Modeli</label>
+                    <input type="text" class="form-control" id="carModel" ng-model="carModel" />
+                </div>
+                <div class="form-group">
+                    <label for="carYear">Araç Yılı</label>
+                    <input type="text" class="form-control" id="carYear" ng-model="carYear" />
+                </div>
+                <div class="form-group">
+                    <label for="carColor">Araç Rengi</label>
+                    <input type="text" class="form-control" id="carColor" ng-model="carColor" />
+                </div>
+                <div class="form-group">
+                    <label for="carKm">Araç KM</label>
+                    <input type="number" class="form-control" id="carKm" ng-model="carKm" />
+                </div>
+                <div class="form-group">
+                    <label for="carControl">Muayene Bitiş Tarihi</label>
+                    <input type="date" class="form-control" id="carControl" ng-model="carControl"><br>
+                </div>
+
+                <button type="submit" class="btn btn-warning" ng-click="add()">Kaydet</button>
+            </div>
+
+            <div class="pagButtons">
+                <input type="button" class="round" ng-click="isShowHide('first')" value="1">
+                <input type="button" class="round" ng-click="isShowHide('middle')" value="2">
+                <input type="button" class="round" ng-click="isShowHide('last')" value="3">
+            </div>
+
+            <!-- <button href="#" class="previous round">&#8249;</button>
+            <button  ng-click="nextBtn()" ng-model="driverInf" class="next round">&#8250;</but> -->
+
+            <!-- <button type="submit" class="btn btn-success" ng-click="deneme()" id="deneme">Deneme</button> -->
         </form><br />
-
-        <!-- Yazdırma Fonksiyonu
-        <h3>Liste</h3>
-        <div>
-            <ul id="ul" class="list-group">
-            </ul>
-        </div> -->
     </div>
+
+    <script>
+        const electron = require('electron');
+        const {
+            ipcRenderer
+        } = electron;
+    </script>
     <script src="/scripts/dashboard.js"></script>
+
 </body>
