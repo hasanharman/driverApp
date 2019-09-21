@@ -310,11 +310,17 @@ app.controller('totalDriversCtrl', function ($scope, $location) {
         driverList.insertAdjacentHTML("beforeend", li);
     }
 
+    
+    
+
     const driverTemplate = doc => `
-    <div class="accordion">${doc.data().ad}</div>
-    <div data-id="${doc.id}" class="panel">
-         <p>${doc.data().soyad}</p>
+    <div class="accordion">
+        ${doc.data().ad}
+        <div id="${doc.id}" class="panel">
+            <p>${doc.data().soyad}</p>
+        </div>
     </div>
+    
             `
 
     // function renderDrivers(doc) {
@@ -337,6 +343,19 @@ app.controller('totalDriversCtrl', function ($scope, $location) {
         snapshot.docs.forEach(doc => {
             renderDrivers(doc);
         })
+        const objects = document.querySelectorAll('.accordion');
+        for ( var object of objects ) {
+            object.addEventListener('click', function(e) {
+                const childId = e.path[0].children[0].id;
+                const element = document.getElementById(childId);
+                let state = element.style.display;
+                if (state == 'block') {
+                    element.style.display = 'none';
+                } else {
+                    element.style.display = 'block';
+                }
+            })
+        }
     })
 });
 
