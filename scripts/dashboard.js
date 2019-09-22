@@ -245,6 +245,7 @@ app.controller('addDriverCtrl', function ($scope, $location) {
 // Total Drivers Controller
 app.controller('totalDriversCtrl', function ($scope, $location) {
 
+    //Main Routing Part
     $scope.home = function () {
         console.log('Anasayfaya gidildi');
         $location.path('/dashboard')
@@ -266,42 +267,7 @@ app.controller('totalDriversCtrl', function ($scope, $location) {
         w.close()
     }
 
-    //Accordion Function
-    // var acc = document.getElementsByClassName("accordion");
-    // var i;
-    // for (i = 0; i < acc.length; i++) {
-    //     acc[i].addEventListener("click", function () {
-    //         this.classList.toggle("active");
-    //         var panel = this.nextElementSibling;
-    //         if (panel.style.display === "block") {
-    //             panel.style.display = "none";
-    //         } else {
-    //             panel.style.display = "block";
-    //         }
-    //     });
-    // }
-
-    //Listing
-    // var ul = document.getElementById('ul');
-    // db.collection('drivers').onSnapshot(snap => {
-    //     //console.log(snap.docs);
-    //     var drivers = snap.docs;
-    //     if (drivers.length) {
-    //         let html = ''
-    //         drivers.forEach(belge => {
-    //             //console.log(drivers);
-    //             var data = belge.data();
-    //             var li = `<li class="list-group-item">${data.ad}<br>${data.photoURL}</li>`;
-    //             html += li;
-    //         })
-    //         ul.innerHTML = html;
-    //     }
-    //     var driverNumber = drivers.length;
-    //     console.log(driverNumber);
-    // })
-
-    
-
+    //Driver Listing to HTML
     const driverList = document.querySelector('#driver-list');
 
     // create element and render drivers
@@ -309,20 +275,16 @@ app.controller('totalDriversCtrl', function ($scope, $location) {
         const li = driverTemplate(doc);
         driverList.insertAdjacentHTML("beforeend", li);
     }
-
-    
-    
-
     const driverTemplate = doc => `
     <div class="accordion">
-        ${doc.data().ad}
+        ${doc.data().ad} ${doc.data().soyad}
         <div id="${doc.id}" class="panel">
-            <p>${doc.data().soyad}</p>
+            <p>${doc.data().adres}</p><br>
+            <p>${doc.data().email}</p><br>
+            <p>${doc.data().aracdurumu}</p><br>
         </div>
     </div>
-    
-            `
-
+    `
     // function renderDrivers(doc) {
     //     let li = document.createElement('li');
     //     let ad = document.createElement('span');
@@ -338,11 +300,12 @@ app.controller('totalDriversCtrl', function ($scope, $location) {
     //     driverList.appendChild(li);
     // }
 
+    //Driver Listing
     db.collection('drivers').get().then((snapshot) => {
         //console.log(snapshot.docs);
         snapshot.docs.forEach(doc => {
             renderDrivers(doc);
-        })
+        })//Toggle Func
         const objects = document.querySelectorAll('.accordion');
         for ( var object of objects ) {
             object.addEventListener('click', function(e) {
