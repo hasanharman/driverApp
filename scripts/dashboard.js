@@ -240,6 +240,7 @@ app.controller('addDriverCtrl', function ($scope, $location) {
         $scope.dayDifference = Math.ceil(timeDiff / (1000 * 3600 * 24));
         return $scope.dayDifference;
     }
+
 });
 
 // Total Drivers Controller
@@ -276,7 +277,7 @@ app.controller('totalDriversCtrl', function ($scope, $location) {
         driverList.insertAdjacentHTML("beforeend", li);
     }
     const driverTemplate = doc => `
-    <div class="accordion">
+    <div class="accordion" id="qua">
         ${doc.data().ad} ${doc.data().soyad}
         <div id="${doc.id}" class="panel">
             <p>${doc.data().adres}</p><br>
@@ -305,10 +306,10 @@ app.controller('totalDriversCtrl', function ($scope, $location) {
         //console.log(snapshot.docs);
         snapshot.docs.forEach(doc => {
             renderDrivers(doc);
-        })//Toggle Func
+        }) //Toggle Func
         const objects = document.querySelectorAll('.accordion');
-        for ( var object of objects ) {
-            object.addEventListener('click', function(e) {
+        for (var object of objects) {
+            object.addEventListener('click', function (e) {
                 const childId = e.path[0].children[0].id;
                 const element = document.getElementById(childId);
                 let state = element.style.display;
@@ -320,6 +321,34 @@ app.controller('totalDriversCtrl', function ($scope, $location) {
             })
         }
     })
+
+    //Counting total numbers of drivers
+    // let size = db.collection('drivers').get().then(snap => {
+    //     size = snap.size // will return the collection size
+    //     //console.log(size);
+    //     return size;
+    // });
+    // console.log(size);
+
+    //Func deneme
+    $scope.size
+    var size2 = db.collection("drivers").get().then(function (snap) {
+        size2 = snap.size;
+        //console.log(snap.size);
+    }).then((size2) => {
+        return size2;
+    });
+    console.log(size2);
+
+    //Settimeout Deneme
+    $scope.numGen = this
+    var numGen = setTimeout(function () {
+        childNum = document.querySelector('#driver-list').children;
+        numGen = childNum.length;
+        console.log(childNum);
+        console.log(numGen);
+    }, 1000);
+
 });
 
 
