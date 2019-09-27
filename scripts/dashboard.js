@@ -331,14 +331,11 @@ app.controller('totalDriversCtrl', function ($scope, $location) {
     // console.log(size);
 
     //Func deneme
-    $scope.size
-    var size2 = db.collection("drivers").get().then(function (snap) {
-        size2 = snap.size;
-        //console.log(snap.size);
-    }).then((size2) => {
-        return size2;
+    $scope.size = this
+    var size = db.collection("drivers").get().then(function (snap) {
+        size = snap.size;
+        console.log('function deneme:',size);
     });
-    console.log(size2);
 
     //Settimeout Deneme
     $scope.numGen = this
@@ -346,9 +343,8 @@ app.controller('totalDriversCtrl', function ($scope, $location) {
         childNum = document.querySelector('#driver-list').children;
         numGen = childNum.length;
         console.log(childNum);
-        console.log(numGen);
+        console.log('settimeout deneme:',numGen);
     }, 1000);
-
 });
 
 
