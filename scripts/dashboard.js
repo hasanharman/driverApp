@@ -320,6 +320,13 @@ app.controller('totalDriversCtrl', function ($scope, $location) {
                 }
             })
         }
+    }).then(() => {
+        $scope.numGen = this
+    childNum = document.querySelector('#driver-list').children;
+    numGen = childNum.length;
+    console.log(childNum);
+    console.log('settimeout deneme:',numGen);
+    document.querySelector("body > div > div.container.totalDrivers.ng-scope > h2:nth-child(2)").textContent = numGen;
     })
 
     //Counting total numbers of drivers
@@ -331,20 +338,18 @@ app.controller('totalDriversCtrl', function ($scope, $location) {
     // console.log(size);
 
     //Func deneme
-    $scope.size = this
-    var size = db.collection("drivers").get().then(function (snap) {
-        size = snap.size;
-        console.log('function deneme:',size);
-    });
+    // var size = new Promise((res, rej) => {
+    //     db.collection("drivers").get().then((snap) => {
+    //         res(size = snap.size)
+    //     })
+    // })
+    // size.then(val => {
+    //     $scope.size = val;
+    //     document.querySelector("body > div > div.container.totalDrivers.ng-scope > h2:nth-child(3)").textContent = val;
+    // })
 
     //Settimeout Deneme
-    $scope.numGen = this
-    var numGen = setTimeout(function () {
-        childNum = document.querySelector('#driver-list').children;
-        numGen = childNum.length;
-        console.log(childNum);
-        console.log('settimeout deneme:',numGen);
-    }, 1000);
+    
 });
 
 
