@@ -64,7 +64,7 @@ app.controller('dashboardCtrl', function ($scope, $location) {
     //         alert('deneme')
     //     })
     // }
-
+    
     $scope.home = function () {
         console.log('Anasayfaya gidildi');
         $location.path('/dashboard')
@@ -210,6 +210,18 @@ app.controller('addDriverCtrl', function ($scope, $location) {
                     carControl: $scope.carControl
                     // psico: psico,
                     // psicoDate: $scope.psicoDate
+                }).then((sub)=> {
+                    const key = sub.key;
+                    if(src === 'srcVar') {
+                        db.collection('srcState').add({
+                            [key]: key
+                        })
+                    }
+                    if(aracdurumu === 'sozlesmeli'){
+                        db.collection('carState').add({
+                            [key]: key
+                        })
+                    }
                 }).then(() => {
                     console.log('ekleme basarili');
                     alert('Sürücü Ekleme Başarılı');
@@ -244,7 +256,9 @@ app.controller('addDriverCtrl', function ($scope, $location) {
 });
 
 // Total Drivers Controller
-app.controller('totalDriversCtrl', function ($scope, $location) {
+app.controller('totalDriversCtrl', function ($scope, $location, $rootScope) {
+
+    
 
     //Main Routing Part
     $scope.home = function () {
@@ -271,7 +285,7 @@ app.controller('totalDriversCtrl', function ($scope, $location) {
     //Driver Listing to HTML
     const driverList = document.querySelector('#driver-list');
 
-    // create element and render drivers
+    // Create element and render drivers
     const renderDrivers = doc => {
         const li = driverTemplate(doc);
         driverList.insertAdjacentHTML("beforeend", li);
@@ -281,8 +295,9 @@ app.controller('totalDriversCtrl', function ($scope, $location) {
         ${doc.data().ad} ${doc.data().soyad}
         <div id="${doc.id}" class="panel">
             <p>${doc.data().adres}</p><br>
-            <p>${doc.data().email}</p><br>
+            <p id="email">${doc.data().email}</p><br>
             <p>${doc.data().aracdurumu}</p><br>
+            <p>${doc.data().carModel}</p><br>
         </div>
     </div>
     `
@@ -290,14 +305,11 @@ app.controller('totalDriversCtrl', function ($scope, $location) {
     //     let li = document.createElement('li');
     //     let ad = document.createElement('span');
     //     let soyad = document.createElement('span');
-
     //     li.setAttribute('data-id', doc.id);
     //     ad.textContent = doc.data().ad;
     //     soyad.textContent = doc.data().soyad;
-
     //     li.appendChild(ad);
     //     li.appendChild(soyad);
-
     //     driverList.appendChild(li);
     // }
 
@@ -321,12 +333,13 @@ app.controller('totalDriversCtrl', function ($scope, $location) {
             })
         }
     }).then(() => {
-        $scope.numGen = this
     childNum = document.querySelector('#driver-list').children;
     numGen = childNum.length;
-    console.log(childNum);
+    mailDef = document.querySelectorAll('#email').length;
+    console.log(mailDef)
     console.log('settimeout deneme:',numGen);
-    document.querySelector("body > div > div.container.totalDrivers.ng-scope > h2:nth-child(2)").textContent = numGen;
+    //document.querySelector("body > div > div.container.totalDrivers.ng-scope > span:nth-child(2)").textContent = numGen;
+    document.querySelector("body > div > div.container.totalDrivers.ng-scope > p > span").textContent = numGen;
     })
 
     //Counting total numbers of drivers
@@ -346,13 +359,8 @@ app.controller('totalDriversCtrl', function ($scope, $location) {
     // size.then(val => {
     //     $scope.size = val;
     //     document.querySelector("body > div > div.container.totalDrivers.ng-scope > h2:nth-child(3)").textContent = val;
-    // })
-
-    //Settimeout Deneme
-    
+    // })    
 });
-
-
 
 // Notifications Controller
 app.controller('notificationsCtrl', function ($scope, $location) {
@@ -378,7 +386,6 @@ app.controller('notificationsCtrl', function ($scope, $location) {
         w.close()
     }
 });
-
 
 //Listing
 //     var ul = document.getElementById('ul');
