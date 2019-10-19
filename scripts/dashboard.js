@@ -64,7 +64,7 @@ app.controller('dashboardCtrl', function ($scope, $location) {
     //         alert('deneme')
     //     })
     // }
-    
+
     $scope.home = function () {
         console.log('Anasayfaya gidildi');
         $location.path('/dashboard')
@@ -89,11 +89,31 @@ app.controller('dashboardCtrl', function ($scope, $location) {
         let w = remote.getCurrentWindow()
         w.close()
     }
+
+    driverNumber = db.collection('drivers').get().then(snap => {
+        size = snap.size // will return the collection size
+        console.log(size);
+        document.querySelector("body > div > div.container.dashboard.ng-scope > div:nth-child(1) > div:nth-child(1) > div > p").textContent = size;
+    });
+
+    srcNumber = db.collection('srcState').get().then(snap => {
+        size2 = snap.size // will return the collection size
+        console.log(size2);
+        document.querySelector("body > div > div.container.dashboard.ng-scope > div:nth-child(1) > div:nth-child(2) > div > p").textContent = size2;
+    });
+
+    contractualCarNumber = db.collection('carState').get().then(snap => {
+        contCar = snap.size // will return the collection size
+        companyCar = size - contCar;
+        console.log(companyCar);
+        document.querySelector("body > div > div.container.dashboard.ng-scope > div:nth-child(1) > div:nth-child(3) > div > p").textContent = contCar;
+        document.querySelector("body > div > div.container.dashboard.ng-scope > div:nth-child(2) > div > div > p").textContent = companyCar;
+    });
 });
 
 
 // Add Driver Controller
-app.controller('addDriverCtrl', function ($scope, $location) {
+app.controller('addDriverCtrl', function ($scope, $location, $rootScope) {
 
     // $scope.days = myService.days;
 
@@ -114,8 +134,8 @@ app.controller('addDriverCtrl', function ($scope, $location) {
             $scope.hideval = true;
             $scope.hideval2 = false;
         }
-    }
 
+    }
     $scope.home = function () {
         console.log('Anasayfaya gidildi');
         $location.path('/dashboard')
@@ -143,40 +163,22 @@ app.controller('addDriverCtrl', function ($scope, $location) {
 
     // Image Selection
     $scope.selectImg = function (e) {
-
         driverPhoto = document.getElementById('image').files[0];
-        // var {
-        //     dialog
-        // } = remote;
-        // selectedImg = null;
-        // dialog.showOpenDialog({
-        //     properties: ['openFile'],
-        //     filters: [{
-        //         name: 'image',
-        //         extensions: ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG']
-        //     }]
-        // }, function (file) {
-        //     console.log(file);
-        // });
     }
-
     //Save Button
     $scope.add = function () {
-
         var aracdurumu;
         document.getElementsByName("aracdurumu").forEach(function (elm) {
             if (elm.checked) {
                 aracdurumu = elm.value;
             }
         })
-
         var src;
         document.getElementsByName("src").forEach(function (elm) {
             if (elm.checked) {
                 src = elm.value;
             }
         })
-
         // var psico;
         // document.getElementsByName("psico").forEach(function (elm) {
         //     if (elm.checked) {
@@ -210,14 +212,15 @@ app.controller('addDriverCtrl', function ($scope, $location) {
                     carControl: $scope.carControl
                     // psico: psico,
                     // psicoDate: $scope.psicoDate
-                }).then((sub)=> {
-                    const key = sub.key;
-                    if(src === 'srcVar') {
+                }).then((sub) => {
+                    const key = sub.id;
+                    console.log(key);
+                    if (src === 'srcVar') {
                         db.collection('srcState').add({
                             [key]: key
                         })
                     }
-                    if(aracdurumu === 'sozlesmeli'){
+                    if (aracdurumu === 'sozlesmeli') {
                         db.collection('carState').add({
                             [key]: key
                         })
@@ -231,34 +234,40 @@ app.controller('addDriverCtrl', function ($scope, $location) {
             });
         });
     }
+
     // Date Calculation
     $scope.days = function () {
         var date = $scope.srcDate;
         var today = new Date();
-        var dd = today.getDate();
-        var mm = today.getMonth() + 1; //January is 0!
-        var yyyy = today.getFullYear();
-        if (dd < 10) {
-            dd = '0' + dd
-        }
-        if (mm < 10) {
-            mm = '0' + mm
-        }
-        today = dd + '/' + mm + '/' + yyyy;
-        $scope.today = today;
-        var date2 = new Date(today);
-        var date1 = new Date(date);
-        var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+        // var dd = today.getDate();
+        // var mm = today.getMonth() + 1; //January is 0!
+        // var yyyy = today.getFullYear();
+        // if (dd < 10) {
+        //     dd = '0' + dd
+        // }
+        // if (mm < 10) {
+        //     mm = '0' + mm
+        // }
+        // today = dd + '/' + mm + '/' + yyyy;
+        var timeDiff = Math.abs(date - today.getTime());
         $scope.dayDifference = Math.ceil(timeDiff / (1000 * 3600 * 24));
-        return $scope.dayDifference;
+        //console.log(today);       
     }
 
+    //Document date show/hide depends on the document existance
+    $(function() {
+        $("input[name='src']").click(function() {
+          if ($("#var").is(":checked")) {
+            $(".srcDateShow").show();
+          } else {
+            $(".srcDateShow").hide();
+          }
+        });
+      });
 });
 
 // Total Drivers Controller
-app.controller('totalDriversCtrl', function ($scope, $location, $rootScope) {
-
-    
+app.controller('totalDriversCtrl', function ($scope, $location) {
 
     //Main Routing Part
     $scope.home = function () {
@@ -295,7 +304,7 @@ app.controller('totalDriversCtrl', function ($scope, $location, $rootScope) {
         ${doc.data().ad} ${doc.data().soyad}
         <div id="${doc.id}" class="panel">
             <p>${doc.data().adres}</p><br>
-            <p id="email">${doc.data().email}</p><br>
+            <p>${doc.data().email}</p><br>
             <p>${doc.data().aracdurumu}</p><br>
             <p>${doc.data().carModel}</p><br>
         </div>
@@ -333,13 +342,11 @@ app.controller('totalDriversCtrl', function ($scope, $location, $rootScope) {
             })
         }
     }).then(() => {
-    childNum = document.querySelector('#driver-list').children;
-    numGen = childNum.length;
-    mailDef = document.querySelectorAll('#email').length;
-    console.log(mailDef)
-    console.log('settimeout deneme:',numGen);
-    //document.querySelector("body > div > div.container.totalDrivers.ng-scope > span:nth-child(2)").textContent = numGen;
-    document.querySelector("body > div > div.container.totalDrivers.ng-scope > p > span").textContent = numGen;
+        childNum = document.querySelector('#driver-list').children;
+        numGen = childNum.length;
+        console.log('settimeout deneme:', numGen);
+        //document.querySelector("body > div > div.container.totalDrivers.ng-scope > span:nth-child(2)").textContent = numGen;
+        document.querySelector("body > div > div.container.totalDrivers.ng-scope > p > span").textContent = numGen;
     })
 
     //Counting total numbers of drivers
@@ -385,6 +392,64 @@ app.controller('notificationsCtrl', function ($scope, $location) {
         let w = remote.getCurrentWindow()
         w.close()
     }
+
+
+    driverNumber = db.collection('drivers').get().then(snap => {
+        size = snap.size // will return the collection size
+        var today = new Date();
+        var array = [];
+        for (const i in snap.docs) {
+            if ( snap.docs[i].data().srcDate !== null ) {
+                var date = snap.docs[i].data().srcDate.seconds * 1000;
+                var timeDiff = Math.abs(date - today.getTime());
+                dayDifference = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    
+                var obj = {}
+                Object.assign(obj, {
+                    ad: snap.docs[i].data().ad
+                })
+                Object.assign(obj, {
+                    soyad: snap.docs[i].data().soyad
+                })
+                Object.assign(obj, {
+                    srcDate: dayDifference
+                })
+                array.push(obj)
+
+            } else {
+                var child = '<li class="list-group-item list-group-item-warning">' + snap.docs[i].data().ad +
+                    ' ' + snap.docs[i].data().soyad +
+                    '\'ın SRC Belgesi yoktur.'
+                    '</li>'
+                $('div.noneSRC.ng-scope').find('ul').append(child);
+            }
+        }
+        //Sorting By SRC Left Days
+        array.sort(sortByDate)
+        function sortByDate(a, b) {
+            if (a.srcDate < b.srcDate) {
+                return -1;
+            }
+            if (a.srcDate > b.srcDate) {
+                return 1;
+            }
+            return 0;
+        }
+        for (const obj of array) {
+            if (obj.srcDate <= 15) {
+                var child = '<li class="list-group-item list-group-item-danger">' + obj.ad +
+                    ' ' + obj.soyad +
+                    ' SRC Belgesinin süresinin dolmasına ' + obj.srcDate + ' gün kaldı' +
+                    '</li>'
+            } else {
+                var child = '<li class="list-group-item list-group-item-info">' + obj.ad +
+                    ' ' + obj.soyad +
+                    ' SRC Belgesinin süresinin dolmasına ' + obj.srcDate + ' gün kaldı' +
+                    '</li>'
+            }
+            $('div.notiList.ng-scope').find('ul').append(child);
+        }
+    });
 });
 
 //Listing

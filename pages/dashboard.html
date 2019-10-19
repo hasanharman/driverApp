@@ -24,6 +24,43 @@
             </div>
         </div>
     </div>
+
+    <!-- Cards -->
+    <div class="container dashboard ">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card card-1">
+                    <h3>Toplam Sürücü Sayısı</h3>
+                    <p style="font-size: 40px;"></p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-2">
+                    <h3>SRC Belgeli Araç Sayısı</h3>
+                    <p style="font-size: 40px;"></p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-3">
+                    <h3>Sözleşmeli Araç Sayısı</h3>
+                    <p style="font-size: 40px;"></p>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card card-4">
+                    <h3>Şirket Aracı Sayısı</h3>
+                    <p style="font-size: 40px;"></p>
+                </div>
+            </div>
+        </div>
+        <div class="row bottomBtn">
+            <button class="addDBtn" ng-click="adddriver()">Sürücü Ekle</button>
+        </div>
+    </div>
+
     <script>
         const electron = require('electron');
         const {

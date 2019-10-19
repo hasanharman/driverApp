@@ -50,15 +50,14 @@
                     <input type="email" class="form-control" id="email" ng-model="email" />
                 </div>
 
-                <label for='image'>Fotoğraf Seç</label>
-                <input type='file' class="form-group" ng-click="selectImg()" id="image" ng-model="image">
-
+                <label for='image' class="photoBtnFake">Fotoğraf Seç</label>
+                <input type='file' class="photoBtn" ng-click="selectImg()" id="image" ng-model="image">
                 <br>
 
                 <div class="form-group">
                     <label for="sirketaraci">Araç Durumu</label><br>
                     <input type="radio" name="aracdurumu" value="sirketaraci" checked>Şirket Aracı<br>
-                    <input type="radio" name="aracdurumu" value="sözlesmeli">Sözleşmeli<br>
+                    <input type="radio" name="aracdurumu" value="sozlesmeli">Sözleşmeli<br>
                 </div>
             </div>
 
@@ -67,15 +66,15 @@
                 <h2>Sürücü Bilgileri</h2>
                 <div class="form-group">
                     <label for="src">SRC Belgesi</label><br>
-                    <input type="radio" name="src" value="srcVar" checked>Var<br>
-                    <input type="radio" name="src" value="srcYok">Yok<br>
+                    <input type="radio" name="src" id="var" value="srcVar" checked>Var<br>
+                    <input type="radio" name="src" id="yok "value="srcYok">Yok<br>
                     <section>
                         <span style="color:blue">Belgenin süresinin dolmasına:</span>
-                        <span style="color:red">{{days()}}</span> <span style="color:blue">gün kaldı</span>
-                        <!-- <span style="color:green">Today's Date is : {{ today }}</span>  -->
+                        <span style="color:red" ng-model="days().name">{{ dayDifference }}</span> <span
+                            style="color:blue">gün kaldı</span>
                     </section>
                 </div>
-                <div class="form-group">
+                <div class="form-group srcDateShow">
                     <label for="srcDate">SRC Geçerlilik Tarihi</label>
                     <input type="date" class="form-control" id="srcDate" ng-model="srcDate"><br>
                 </div>
@@ -89,9 +88,6 @@
                     <label for="psicoDate">Psikoteknik Geçerlilik Tarihi</label>
                     <input type="date" class="form-control" id="psicoDate" ng-model="psicoDate"><br>
                 </div> -->
-                <div>
-                    <p type="text" id="tarih" ng-model="days().name">{{days()}}</p>
-                </div>
             </div>
 
             <div class="carInf" ng-hide="hideval2">
