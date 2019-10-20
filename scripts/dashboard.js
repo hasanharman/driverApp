@@ -28,15 +28,14 @@ app.config(function ($routeProvider) {
             templateUrl: 'pages/notifications.html',
             controller: 'notificationsCtrl'
         })
+        .when('/editdriver', {
+            templateUrl: 'pages/editdriver.html',
+            controller: 'editdriverCtrl'
+        })
         .otherwise({
             redirectTo: '/'
         })
 })
-
-//LeftDays Service Main1
-// app.service("myService", function() {
-//     this.days = '';
-// })
 
 // Login Controller
 app.controller('loginCtrl', function ($scope, $location) {
@@ -49,7 +48,8 @@ app.controller('loginCtrl', function ($scope, $location) {
 
     $scope.login = function () {
         auth.signInWithEmailAndPassword($scope.mail, $scope.parola).then(sonuc => {
-            console.log('Giriş Başarılı');
+            $location.path('/dashboard')
+        }).then(() => {
             $location.path('/dashboard')
         })
     }
@@ -77,17 +77,21 @@ app.controller('dashboardCtrl', function ($scope, $location) {
         console.log('totalDrivers sayfasına gidildi');
         $location.path('/totaldrivers')
     }
+    $scope.editdriver = function () {
+        console.log('edit driver sayfasına gidildi');
+        $location.path('/editdriver')
+    }
     $scope.notifications = function () {
         console.log('notifications sayfasına gidildi');
         $location.path('/notifications')
     }
     $scope.exit = function () {
-        // auth.signOut().then(sonuc => {
-        //     console.log('Çıkış Başarılı');
-        //     $location.path('/login')
-        // })
-        let w = remote.getCurrentWindow()
-        w.close()
+
+        console.log('Çıkış Başarılı');
+        $location.path('/login')
+
+        // let w = remote.getCurrentWindow()
+        // w.close()
     }
 
     driverNumber = db.collection('drivers').get().then(snap => {
@@ -115,8 +119,6 @@ app.controller('dashboardCtrl', function ($scope, $location) {
 // Add Driver Controller
 app.controller('addDriverCtrl', function ($scope, $location, $rootScope) {
 
-    // $scope.days = myService.days;
-
     $scope.showval = true;
     $scope.hideval = true;
     $scope.hideval2 = true;
@@ -134,8 +136,8 @@ app.controller('addDriverCtrl', function ($scope, $location, $rootScope) {
             $scope.hideval = true;
             $scope.hideval2 = false;
         }
-
     }
+
     $scope.home = function () {
         console.log('Anasayfaya gidildi');
         $location.path('/dashboard')
@@ -148,17 +150,21 @@ app.controller('addDriverCtrl', function ($scope, $location, $rootScope) {
         console.log('totalDrivers sayfasına gidildi');
         $location.path('/totaldrivers')
     }
+    $scope.editdriver = function () {
+        console.log('edit driver sayfasına gidildi');
+        $location.path('/editdriver')
+    }
     $scope.notifications = function () {
         console.log('notifications sayfasına gidildi');
         $location.path('/notifications')
     }
     $scope.exit = function () {
-        // auth.signOut().then(sonuc => {
-        //     console.log('Çıkış Başarılı');
-        //     $location.path('/login')
-        // })
-        let w = remote.getCurrentWindow()
-        w.close()
+
+        console.log('Çıkış Başarılı');
+        $location.path('/login')
+
+        // let w = remote.getCurrentWindow()
+        // w.close()
     }
 
     // Image Selection
@@ -255,15 +261,15 @@ app.controller('addDriverCtrl', function ($scope, $location, $rootScope) {
     }
 
     //Document date show/hide depends on the document existance
-    $(function() {
-        $("input[name='src']").click(function() {
-          if ($("#var").is(":checked")) {
-            $(".srcDateShow").show();
-          } else {
-            $(".srcDateShow").hide();
-          }
+    $(function () {
+        $("input[name='src']").click(function () {
+            if ($("#var").is(":checked")) {
+                $(".srcDateShow").show();
+            } else {
+                $(".srcDateShow").hide();
+            }
         });
-      });
+    });
 });
 
 // Total Drivers Controller
@@ -282,13 +288,21 @@ app.controller('totalDriversCtrl', function ($scope, $location) {
         console.log('totalDrivers sayfasına gidildi');
         $location.path('/totaldrivers')
     }
+    $scope.editdriver = function (e) {
+        console.log('edit driver sayfasına gidildi');
+        $location.path('/editdriver')
+    }
     $scope.notifications = function () {
         console.log('notifications sayfasına gidildi');
         $location.path('/notifications')
     }
     $scope.exit = function () {
-        let w = remote.getCurrentWindow()
-        w.close()
+
+        console.log('Çıkış Başarılı');
+        $location.path('/login')
+
+        // let w = remote.getCurrentWindow()
+        // w.close()
     }
 
     //Driver Listing to HTML
@@ -300,27 +314,27 @@ app.controller('totalDriversCtrl', function ($scope, $location) {
         driverList.insertAdjacentHTML("beforeend", li);
     }
     const driverTemplate = doc => `
-    <div class="accordion" id="qua">
+    <div class="accordion">
         ${doc.data().ad} ${doc.data().soyad}
         <div id="${doc.id}" class="panel">
             <p>${doc.data().adres}</p><br>
             <p>${doc.data().email}</p><br>
             <p>${doc.data().aracdurumu}</p><br>
             <p>${doc.data().carModel}</p><br>
+            <button class='driverEdit'>Düzenle</button> <button class='deleteDriver'>Sil</button>
         </div>
     </div>
     `
-    // function renderDrivers(doc) {
-    //     let li = document.createElement('li');
-    //     let ad = document.createElement('span');
-    //     let soyad = document.createElement('span');
-    //     li.setAttribute('data-id', doc.id);
-    //     ad.textContent = doc.data().ad;
-    //     soyad.textContent = doc.data().soyad;
-    //     li.appendChild(ad);
-    //     li.appendChild(soyad);
-    //     driverList.appendChild(li);
-    // }
+
+    //Delete Driver Func
+    deleteDriver = function (id) {
+        if (confirm("Are you sure?")) {
+            db.collection('drivers').doc(id).delete().then(() => {
+                alert('Kullanıcı silindi!');
+                window.location.reload();
+            })
+        }
+    }
 
     //Driver Listing
     db.collection('drivers').get().then((snapshot) => {
@@ -331,14 +345,25 @@ app.controller('totalDriversCtrl', function ($scope, $location) {
         const objects = document.querySelectorAll('.accordion');
         for (var object of objects) {
             object.addEventListener('click', function (e) {
-                const childId = e.path[0].children[0].id;
-                const element = document.getElementById(childId);
-                let state = element.style.display;
-                if (state == 'block') {
-                    element.style.display = 'none';
+                console.log(e.path[0].className);
+                if (e.path[0].className == 'driverEdit') {
+                    var id = e.path[1].id;
+                    window.location.href = "file:///Users/harman/Desktop/driverApp/index.html#!/editdriver/?param=" + id;
+                } else if (e.path[0].className == 'deleteDriver') {
+                    var id = e.path[1].id;
+                    deleteDriver(id);
                 } else {
-                    element.style.display = 'block';
+                    const childId = e.path[0].children[0].id;
+                    const element = document.getElementById(childId);
+                    let state = element.style.display;
+                    if (state == 'block') {
+                        element.style.display = 'none';
+                    } else {
+                        element.style.display = 'block';
+                    }
                 }
+
+
             })
         }
     }).then(() => {
@@ -368,6 +393,105 @@ app.controller('totalDriversCtrl', function ($scope, $location) {
     //     document.querySelector("body > div > div.container.totalDrivers.ng-scope > h2:nth-child(3)").textContent = val;
     // })    
 });
+// Edit Driver Controller
+app.controller('editdriverCtrl', function ($scope, $location) {
+
+    $scope.showval = true;
+    $scope.hideval = true;
+    $scope.hideval2 = true;
+    $scope.isShowHide = function (param) {
+        if (param == "first") {
+            $scope.showval = true;
+            $scope.hideval = true;
+            $scope.hideval2 = true;
+        } else if (param == "middle") {
+            $scope.showval = false;
+            $scope.hideval = false;
+            $scope.hideval2 = true;
+        } else if (param == "last") {
+            $scope.showval = false;
+            $scope.hideval = true;
+            $scope.hideval2 = false;
+        }
+    }
+    //Getting Driver datas from db
+    var id = $location.path('/editdriver').$$search.param;
+    db.collection('drivers').doc(id).get().then((e) => {
+        //console.log(e.data());
+        $scope.ad = e.data().ad;
+        $scope.soyad = e.data().soyad;
+        $scope.adres = e.data().adres;
+        $scope.telefon = e.data().telefon;
+        $scope.email = e.data().email;
+        downloadURL = e.data().photoURL;
+        aracdurumu = e.data().aracdurumu;
+        //$scope.srcDate = e.data().srcDate;
+        $scope.carModel = e.data().carModel;
+        $scope.carYear = e.data().carYear;
+        $scope.carColor = e.data().carColor;
+        $scope.carKm = e.data().carKm;
+        //$scope.carControl =  e.data().carControl;
+        if (e.data().src == 'srcVar') {
+            $('#var').prop('checked', true)
+            console.log($('#var'));
+
+        } else {
+            $('#yok').prop('checked', true)
+            console.log($('#yok'));
+
+        }
+    }).then(() => {
+        $('#ad').focus();
+        $('#ad').blur();
+    })
+    //UpdateDriver
+    $scope.updateDriver = function (id) {
+        if (confirm("Are you sure?")) {
+            db.collection('drivers').doc(id).set({
+                ad: $scope.ad                
+            }).then(() => {
+                console.log('ekleme basarili');
+                alert('Sürücü Ekleme Başarılı');
+            }).catch(err => {
+                console.log(err.message);
+            })
+        }
+    }
+
+
+    $scope.home = function () {
+        console.log('Anasayfaya gidildi');
+        $location.path('/dashboard')
+    }
+    $scope.adddriver = function () {
+        console.log('addDriver sayfasına gidildi');
+        $location.path('/adddriver')
+    }
+    $scope.totaldrivers = function () {
+        console.log('totalDrivers sayfasına gidildi');
+        $location.path('/totaldrivers')
+    }
+    $scope.editdriver = function () {
+        console.log('edit driver sayfasına gidildi');
+        $location.path('/editdriver')
+    }
+    $scope.notifications = function () {
+        console.log('notifications sayfasına gidildi');
+        $location.path('/notifications')
+    }
+    $scope.exit = function () {
+        console.log('Çıkış Başarılı');
+        $location.path('/login')
+
+        // let w = remote.getCurrentWindow()
+        // w.close()
+    }
+
+    // db.collection('drivers').doc(id).then((e)=>{
+    //     console.log(e);
+
+    // })
+});
 
 // Notifications Controller
 app.controller('notificationsCtrl', function ($scope, $location) {
@@ -384,13 +508,21 @@ app.controller('notificationsCtrl', function ($scope, $location) {
         console.log('totalDrivers sayfasına gidildi');
         $location.path('/totaldrivers')
     }
+    $scope.editdriver = function () {
+        console.log('edit driver sayfasına gidildi');
+        $location.path('/editdriver')
+    }
     $scope.notifications = function () {
         console.log('notifications sayfasına gidildi');
         $location.path('/notifications')
     }
     $scope.exit = function () {
-        let w = remote.getCurrentWindow()
-        w.close()
+
+        console.log('Çıkış Başarılı');
+        $location.path('/login')
+
+        // let w = remote.getCurrentWindow()
+        // w.close()
     }
 
 
@@ -399,11 +531,11 @@ app.controller('notificationsCtrl', function ($scope, $location) {
         var today = new Date();
         var array = [];
         for (const i in snap.docs) {
-            if ( snap.docs[i].data().srcDate !== null ) {
+            if (snap.docs[i].data().srcDate !== null) {
                 var date = snap.docs[i].data().srcDate.seconds * 1000;
                 var timeDiff = Math.abs(date - today.getTime());
                 dayDifference = Math.ceil(timeDiff / (1000 * 3600 * 24));
-    
+
                 var obj = {}
                 Object.assign(obj, {
                     ad: snap.docs[i].data().ad
@@ -420,12 +552,13 @@ app.controller('notificationsCtrl', function ($scope, $location) {
                 var child = '<li class="list-group-item list-group-item-warning">' + snap.docs[i].data().ad +
                     ' ' + snap.docs[i].data().soyad +
                     '\'ın SRC Belgesi yoktur.'
-                    '</li>'
+                '</li>'
                 $('div.noneSRC.ng-scope').find('ul').append(child);
             }
         }
         //Sorting By SRC Left Days
         array.sort(sortByDate)
+
         function sortByDate(a, b) {
             if (a.srcDate < b.srcDate) {
                 return -1;

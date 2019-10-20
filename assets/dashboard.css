@@ -405,3 +405,27 @@ h1 {
   color: white;
   background-color: rgba(33, 150, 243, 0.75);
 }
+/* 
+Total Drivers Page Buttons  */
+
+.driverEdit {
+  background-color: rgba(33, 150, 243, 0.75);
+  border-radius: 5px;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.deleteDriver {
+  background-color: rgb(243, 41, 41);
+  border-radius: 5px;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}

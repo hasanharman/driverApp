@@ -1,0 +1,134 @@
+<head>
+    <link href="assets/dashboard.css" rel="stylesheet">
+</head>
+
+<body ng-conroller="editdriverCtrl">
+    <h1 class="headingMain">Sürücü Düzenle</h1>
+
+    <div class="outer-menu">
+        <input class="checkbox-toggle" type="checkbox" />
+        <div class="hamburger">
+            <div></div>
+        </div>
+        <div class="menu">
+            <div>
+                <div>
+                    <ul>
+                        <li><a ng-click="home()">Anasayfa</a></li>
+                        <li><a ng-click="adddriver()">Sürücü Ekle</a></li>
+                        <li><a ng-click="totaldrivers()">Kayıtlı Sürücüler</a></li>
+                        <li><a ng-click="editdriver()">Sürücü Düzenle</a></li>
+                        <li><a ng-click="notifications()">Bildirimler</a></li>
+                        <li><a ng-click="exit()">Çıkış</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container addDriver">
+        <form>
+            <div class="personalInf" ng-model="personalInf" ng-show="showval">
+                <h2>Kişisel Bilgiler</h2>
+                <div class="form-group">
+                    <label for="ad">Ad</label>
+                    <input type="text" class="form-control" id="ad" ng-model="ad" />
+                </div>
+                <div class="form-group">
+                    <label for="soyad">Soyad</label>
+                    <input type="text" class="form-control" id="soyad" ng-model="soyad" />
+                </div>
+                <div class="form-group">
+                    <label for="adres">Adres</label>
+                    <input type="text" class="form-control" id="adres" ng-model="adres" />
+                </div>
+                <div class="form-group">
+                    <label for="telefon">Telefon Numarası</label>
+                    <input type="number" class="form-control" id="telefon" ng-model="telefon" />
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" ng-model="email" />
+                </div>
+
+                <label for='image' class="photoBtnFake">Fotoğraf Seç</label>
+                <input type='file' class="photoBtn" ng-click="selectImg()" id="image" ng-model="image">
+                <br>
+
+                <div class="form-group">
+                    <label for="sirketaraci">Araç Durumu</label><br>
+                    <input type="radio" name="aracdurumu" value="sirketaraci" checked>Şirket Aracı<br>
+                    <input type="radio" name="aracdurumu" value="sozlesmeli">Sözleşmeli<br>
+                </div>
+            </div>
+
+
+            <div class="driverInf" ng-hide="hideval">
+                <h2>Sürücü Bilgileri</h2>
+                <div class="form-group">
+                    <label for="src">SRC Belgesi</label><br>
+                    <input type="radio" name="src" id="var" value="srcVar" checked>Var<br>
+                    <input type="radio" name="src" id="yok " value="srcYok">Yok<br>
+                    <section>
+                        <span style="color:blue">Belgenin süresinin dolmasına:</span>
+                        <span style="color:red" ng-model="days().name">{{ dayDifference }}</span> <span
+                            style="color:blue">gün kaldı</span>
+                    </section>
+                </div>
+                <div class="form-group srcDateShow">
+                    <label for="srcDate">SRC Geçerlilik Tarihi</label>
+                    <input type="date" class="form-control" id="srcDate" ng-model="srcDate"><br>
+                </div>
+
+                <!-- <div class="form-group">
+                    <label for="src">Psikoteknik Belgesi</label><br>
+                    <input type="radio" name="psico" value="psicoVar" checked>Var<br>
+                    <input type="radio" name="psico" value="psicoYok">Yok<br>
+                </div>
+                <div class="form-group">
+                    <label for="psicoDate">Psikoteknik Geçerlilik Tarihi</label>
+                    <input type="date" class="form-control" id="psicoDate" ng-model="psicoDate"><br>
+                </div> -->
+            </div>
+
+            <div class="carInf" ng-hide="hideval2">
+                <h2>AraçBilgileri</h2>
+                <div class="form-group">
+                    <label for="carModel">Araç Modeli</label>
+                    <input type="text" class="form-control" id="carModel" ng-model="carModel" />
+                </div>
+                <div class="form-group">
+                    <label for="carYear">Araç Yılı</label>
+                    <input type="text" class="form-control" id="carYear" ng-model="carYear" />
+                </div>
+                <div class="form-group">
+                    <label for="carColor">Araç Rengi</label>
+                    <input type="text" class="form-control" id="carColor" ng-model="carColor" />
+                </div>
+                <div class="form-group">
+                    <label for="carKm">Araç KM</label>
+                    <input type="number" class="form-control" id="carKm" ng-model="carKm" />
+                </div>
+                <div class="form-group">
+                    <label for="carControl">Muayene Bitiş Tarihi</label>
+                    <input type="date" class="form-control" id="carControl" ng-model="carControl"><br>
+                </div>
+
+                <button type="submit" class="btn btn-warning" ng-click="updateDriver()">Güncelle</button>
+            </div>
+
+            <div class="pagButtons">
+                <input type="button" class="round" ng-click="isShowHide('first')" value="1">
+                <input type="button" class="round" ng-click="isShowHide('middle')" value="2">
+                <input type="button" class="round" ng-click="isShowHide('last')" value="3">
+            </div>
+        </form><br />
+    </div>
+    <script>
+        const electron = require('electron');
+        const {
+            ipcRenderer
+        } = electron;
+    </script>
+
+    <script src="/scripts/dashboard.js"></script>
+</body>
