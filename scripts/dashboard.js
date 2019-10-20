@@ -416,6 +416,7 @@ app.controller('editdriverCtrl', function ($scope, $location) {
     }
     //Getting Driver datas from db
     var id = $location.path('/editdriver').$$search.param;
+    $scope.id = id;
     db.collection('drivers').doc(id).get().then((e) => {
         //console.log(e.data());
         $scope.ad = e.data().ad;
@@ -446,15 +447,46 @@ app.controller('editdriverCtrl', function ($scope, $location) {
     })
     //UpdateDriver
     $scope.updateDriver = function (id) {
-        if (confirm("Are you sure?")) {
+        if (confirm("Sürücü bilgilerini güncellemek istediğinize emin misiniz?")) {
+            id = $scope.id
             db.collection('drivers').doc(id).set({
-                ad: $scope.ad                
-            }).then(() => {
-                console.log('ekleme basarili');
-                alert('Sürücü Ekleme Başarılı');
-            }).catch(err => {
-                console.log(err.message);
-            })
+                ad: $scope.ad,
+                soyad: $scope.soyad,
+                    adres: $scope.adres,
+                    telefon: $scope.telefon,
+                    email: $scope.email,
+                    //photoURL: downloadURL,
+                    //aracdurumu: aracdurumu,
+                    //src: src,
+                    srcDate: $scope.srcDate,
+                    carModel: $scope.carModel,
+                    carYear: $scope.carYear,
+                    carColor: $scope.carColor,
+                    carKm: $scope.carKm,
+                    carControl: $scope.carControl
+                    // psico: psico,
+                    // psicoDate: $scope.psicoDate
+                })
+                // .then((sub) => {
+                //     const key = sub.id;
+                //     console.log(key);
+                //     if (src === 'srcVar') {
+                //         db.collection('srcState').add({
+                //             [key]: key
+                //         })
+                //     }
+                //     if (aracdurumu === 'sozlesmeli') {
+                //         db.collection('carState').add({
+                //             [key]: key
+                //         })
+                //     }
+                // })
+                .then(() => {
+                    console.log('Update success');
+                    alert('Sürücü Güncelleme Başarılı');
+                }).catch(err => {
+                    console.log(err.message);
+                })
         }
     }
 
@@ -532,7 +564,7 @@ app.controller('notificationsCtrl', function ($scope, $location) {
         var array = [];
         for (const i in snap.docs) {
             if (snap.docs[i].data().srcDate !== null) {
-                var date = snap.docs[i].data().srcDate.seconds * 1000;
+                var date = snap.docs[i].data().srcDate.seconds*1000;                
                 var timeDiff = Math.abs(date - today.getTime());
                 dayDifference = Math.ceil(timeDiff / (1000 * 3600 * 24));
 

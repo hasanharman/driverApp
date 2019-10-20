@@ -366,13 +366,28 @@ h1 {
   width: 10%;
   height: 8%;
   bottom: 5%;
-  left: 40%;
-  right: 40%;
+  left: 35%;
+  right: 50%;
   border-radius: 5px;
   font-size: 2vh;
   font-weight: 600;
   color: white;
   background-color: rgba(33, 150, 243, 0.75);
+}
+
+.totalDBtn {
+  text-align: center;
+  position: fixed;
+  width: 10%;
+  height: 8%;
+  bottom: 5%;
+  left: 50%;
+  right: 35%;
+  border-radius: 5px;
+  font-size: 2vh;
+  font-weight: 600;
+  color: white;
+  background-color: rgba(243, 205, 33, 0.75);
 }
 /* Notification Page  */
 .notiList{
