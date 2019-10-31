@@ -53,25 +53,14 @@
                 <label for='image' class="photoBtnFake">Fotoğraf Seç</label>
                 <input type='file' class="photoBtn" ng-click="selectImg()" id="image" ng-model="image">
                 <br>
-
-                <div class="form-group">
-                    <label for="sirketaraci">Araç Durumu</label><br>
-                    <input type="radio" name="aracdurumu" value="sirketaraci" checked>Şirket Aracı<br>
-                    <input type="radio" name="aracdurumu" value="sozlesmeli">Sözleşmeli<br>
-                </div>
             </div>
 
             <div class="driverInf" ng-hide="hideval">
-                <h2>Sürücü Bilgileri</h2>
+                <h2>Belge Bilgileri</h2>
                 <div class="form-group">
                     <label for="src">SRC Belgesi</label><br>
-                    <input type="radio" name="src" id="var" value="srcVar" checked>Var<br>
-                    <input type="radio" name="src" id="yok " value="srcYok">Yok<br>
-                    <section>
-                        <span style="color:blue">Belgenin süresinin dolmasına:</span>
-                        <span style="color:red" ng-model="days().name">{{ dayDifference }}</span> <span
-                            style="color:blue">gün kaldı</span>
-                    </section>
+                    <input type="radio" name="src" id="var" value="srcVar">Var<br>
+                    <input type="radio" name="src" id="var2" value="srcYok">Yok<br>
                 </div>
                 <div class="form-group srcDateShow">
                     <label for="srcDate">SRC Geçerlilik Tarihi</label>
@@ -90,7 +79,13 @@
             </div>
 
             <div class="carInf" ng-hide="hideval2">
-                <h2>AraçBilgileri</h2>
+                <h2>Araç Bilgileri</h2>
+
+                <div class="form-group">
+                    <label for="sirketaraci">Araç Durumu</label><br>
+                    <input type="radio" name="aracdurumu" value="sirketaraci" checked>Şirket Aracı<br>
+                    <input type="radio" name="aracdurumu" value="sozlesmeli">Sözleşmeli<br>
+                </div>
                 <div class="form-group">
                     <label for="carModel">Araç Modeli</label>
                     <input type="text" class="form-control" id="carModel" ng-model="carModel" />

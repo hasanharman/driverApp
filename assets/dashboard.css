@@ -238,16 +238,20 @@ h1 {
 
 .addDriver {
   padding: 2% 5% 5% 5%;
+  width: 80%;
 }
 
 .dashboard {
   margin-top: 2%;
   margin-left: 5%;
   margin-right: 5%;
+  width: 90%;
+  overflow-y: hidden!important;
 }
 
 .totalDrivers {
   padding: 2% 5% 5% 5%;
+  width: 80%;
 }
 
 .headingMain {
@@ -333,28 +337,28 @@ h1 {
 }
 
 .card-1 {
-  background-image: url(https://ionicframework.com/img/getting-started/ionic-native-card.png);
+  background-image: url("../assets/icons/driver.png");
   background-repeat: no-repeat;
   background-position: right;
   background-size: 80px;
 }
 
 .card-2 {
-  background-image: url(https://ionicframework.com/img/getting-started/components-card.png);
+  background-image: url("../assets/icons/car.png");
   background-repeat: no-repeat;
   background-position: right;
   background-size: 80px;
 }
 
 .card-3 {
-  background-image: url(https://ionicframework.com/img/getting-started/theming-card.png);
+  background-image: url("../assets/icons/taxi.png");
   background-repeat: no-repeat;
   background-position: right;
   background-size: 80px;
 }
 
 .card-4 {
-  background-image: url(https://ionicframework.com/img/getting-started/theming-card.png);
+  background-image: url("../assets/icons/truck.png");
   background-repeat: no-repeat;
   background-position: right;
   background-size: 80px;
@@ -368,6 +372,7 @@ h1 {
   bottom: 5%;
   left: 35%;
   right: 50%;
+  border:none;
   border-radius: 5px;
   font-size: 2vh;
   font-weight: 600;
@@ -383,24 +388,28 @@ h1 {
   bottom: 5%;
   left: 50%;
   right: 35%;
+  border:none;
   border-radius: 5px;
   font-size: 2vh;
   font-weight: 600;
-  color: white;
+  color:black;
   background-color: rgba(243, 205, 33, 0.75);
 }
+
 /* Notification Page  */
 .notiList{
   margin-top: 5%;
   margin-left: 10%;
   margin-right: 10%;
   margin-bottom: 5%;
+  width: 75%;
 }
 .noneSRC{
   margin-top: 5%;
   margin-left: 10%;
   margin-right: 10%;
   margin-bottom: 5%;
+  width: 75%;
 }
 
 /* Add Photo Button Css */

@@ -267,6 +267,7 @@ app.controller('addDriverCtrl', function ($scope, $location, $rootScope) {
                 }).then(() => {
                     console.log('ekleme basarili');
                     alert('Sürücü Ekleme Başarılı');
+                    window.location.reload();
                 }).catch(err => {
                     console.log(err.message);
                 })
@@ -361,7 +362,7 @@ app.controller('totalDriversCtrl', function ($scope, $location) {
 
     //Delete Driver Func
     deleteDriver = function (id) {
-        if (confirm("Are you sure?")) {
+        if (confirm("Sürücüyü silmek istediğinize emin misiniz?")) {
             db.collection('drivers').doc(id).delete().then(() => {
                 alert('Kullanıcı silindi!');
                 window.location.reload();
@@ -459,19 +460,28 @@ app.controller('editdriverCtrl', function ($scope, $location) {
         $scope.email = e.data().email;
         downloadURL = e.data().photoURL;
         aracdurumu = e.data().aracdurumu;
-        //$scope.srcDate = e.data().srcDate;
+        srcState = e.data().src
+        
+ 
+        if (e.data().srcDate !== null && e.data().srcDate !== undefined) {
+            var seconds = e.data().srcDate.seconds*1000;
+            var newDate = new Date(seconds);
+            var day = ("0" + (newDate.getDate() - 1)).slice(-2);
+            var month = ("0" + (newDate.getMonth() + 1)).slice(-2);
+            var date = newDate.getFullYear()+'-'+(month)+'-'+(day);
+            console.log(date);
+            document.querySelector('#srcDate').value = date;
+        }
         $scope.carModel = e.data().carModel;
         $scope.carYear = e.data().carYear;
         $scope.carColor = e.data().carColor;
         $scope.carKm = e.data().carKm;
         //$scope.carControl =  e.data().carControl;
-        if (e.data().src == 'srcVar') {
+        if (srcState == 'srcVar') {
             $('#var').prop('checked', true)
-            console.log($('#var'));
 
         } else {
-            $('#yok').prop('checked', true)
-            console.log($('#yok'));
+            $('#var2').prop('checked', true)
 
         }
     }).then(() => {
@@ -483,8 +493,8 @@ app.controller('editdriverCtrl', function ($scope, $location) {
         if (confirm("Sürücü bilgilerini güncellemek istediğinize emin misiniz?")) {
             id = $scope.id
             db.collection('drivers').doc(id).set({
-                ad: $scope.ad,
-                soyad: $scope.soyad,
+                    ad: $scope.ad,
+                    soyad: $scope.soyad,
                     adres: $scope.adres,
                     telefon: $scope.telefon,
                     email: $scope.email,
@@ -522,7 +532,6 @@ app.controller('editdriverCtrl', function ($scope, $location) {
                 })
         }
     }
-
 
     $scope.home = function () {
         console.log('Anasayfaya gidildi');
@@ -590,15 +599,14 @@ app.controller('notificationsCtrl', function ($scope, $location) {
         // w.close()
     }
 
-
     driverNumber = db.collection('drivers').get().then(snap => {
         size = snap.size // will return the collection size
         var today = new Date();
         var array = [];
         for (const i in snap.docs) {
-            if (snap.docs[i].data().srcDate !== null) {
-                var date = snap.docs[i].data();               
-                console.log(date.srcDate);
+            if (snap.docs[i].data().srcDate !== null && snap.docs[i].data().srcDate !== undefined) {
+                var date = snap.docs[i].data().srcDate.seconds * 1000;
+                console.log(date);
                 var timeDiff = Math.abs(date - today.getTime());
                 dayDifference = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
