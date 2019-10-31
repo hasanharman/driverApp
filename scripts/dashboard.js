@@ -45,13 +45,46 @@ app.controller('loginCtrl', function ($scope, $location) {
             alert('Başarıyla üye oldunuz, şimdi giriş yapınız.')
         })
     }
-
     $scope.login = function () {
         auth.signInWithEmailAndPassword($scope.mail, $scope.parola).then(sonuc => {
             $location.path('/dashboard')
         }).then(() => {
             $location.path('/dashboard')
         })
+    }
+
+    $scope.resetPsw = function () {
+        auth.sendPasswordResetEmail($scope.mail).then(function () {
+            alert('Sıfırlama maili gönderildi. Lütfen mailinizi kontrol edin.');
+            console.log('Email was sent')
+        }).catch(function (error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+
+            if (errorCode == 'auth/user-not-found') {
+                alert(errorMessage);
+            }
+            console.log(error);
+        });
+    }
+
+    $scope.showval = true;
+    $scope.hideval = true;
+    $scope.hideval2 = true;
+    $scope.isShowHide = function (param) {
+        if (param == "login") {
+            $scope.showval = true;
+            $scope.hideval = true;
+            $scope.hideval2 = true;
+        } else if (param == "signup") {
+            $scope.showval = false;
+            $scope.hideval = false;
+            $scope.hideval2 = true;
+        } else if (param == "reset") {
+            $scope.showval = false;
+            $scope.hideval = true;
+            $scope.hideval2 = false;
+        }
     }
 });
 
@@ -564,7 +597,8 @@ app.controller('notificationsCtrl', function ($scope, $location) {
         var array = [];
         for (const i in snap.docs) {
             if (snap.docs[i].data().srcDate !== null) {
-                var date = snap.docs[i].data().srcDate.seconds*1000;                
+                var date = snap.docs[i].data();               
+                console.log(date.srcDate);
                 var timeDiff = Math.abs(date - today.getTime());
                 dayDifference = Math.ceil(timeDiff / (1000 * 3600 * 24));
 

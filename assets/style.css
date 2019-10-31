@@ -1,3 +1,17 @@
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 300;
+    src: local('Open Sans Light'), local('OpenSans-Light'), url(https://fonts.gstatic.com/s/opensans/v17/mem5YaGs126MiZpBA-UN_r8OUuhs.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Pacifico';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Pacifico Regular'), local('Pacifico-Regular'), url(https://fonts.gstatic.com/s/pacifico/v15/FwZY7-Qmy14u9lezJ-6H6Mw.ttf) format('truetype');
+}
+
 html,
 body {
     height: 100%;
@@ -15,7 +29,8 @@ body {
     justify-content: center;
     padding-top: 40px;
     padding-bottom: 40px;
-    background-color: #f5f5f5;
+    background-image: url("../assets/taxi.jpg");
+
 }
 
 .form-signin {
@@ -60,7 +75,7 @@ body {
     width: 75%;
 }
 
-  .update-container {
+.update-container {
     background-color: rgba(0, 0, 0, .8);
     position: absolute;
     top: 0px;
@@ -69,9 +84,53 @@ body {
     height: 100%;
     z-index: 1;
     visibility: visible;
-  }
+}
 
-  .main-container {
+.main-container {
     z-index: 0;
-  }
+}
 
+.container1 {
+    height: 400px;
+    width: 400px;
+    border-radius: 2%;
+    background-color: black;
+    opacity: 0.8;
+    filter: alpha(opacity=50);
+    /* For IE8 and earlier */
+    color: rgba(245, 225, 57);
+    text-align: center;
+}
+
+.container2 {
+    height: 400px;
+    width: 400px;
+    border-radius: 2%;
+    background-color: black;
+    opacity: 0.8;
+    filter: alpha(opacity=50);
+    /* For IE8 and earlier */
+    color: rgba(245, 225, 57);
+    text-align: center;
+}
+
+.login {
+    cursor: pointer;
+    background-color: rgba(245, 225, 57);
+    margin: 10px;
+}
+
+.signup {
+    cursor: pointer;
+    background-color: rgb(110, 245, 57);
+    margin: 10px;
+}
+
+h2 {
+    font-family: "Pacifico", cursive;
+    font-weight: 400;
+    font-size: 3em;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
