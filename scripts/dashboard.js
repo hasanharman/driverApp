@@ -1,8 +1,9 @@
 var app = angular.module('myApp', ['ngRoute']);
 
-const {
-    remote
-} = require('electron');
+const {remote} = require('electron');
+var deneme = require('electron').remote.app.getAppPath()
+console.log(deneme);
+
 
 let driverPhoto;
 
@@ -382,7 +383,10 @@ app.controller('totalDriversCtrl', function ($scope, $location) {
                 console.log(e.path[0].className);
                 if (e.path[0].className == 'driverEdit') {
                     var id = e.path[1].id;
-                    window.location.href = "file:///Users/harman/Desktop/driverApp/index.html#!/editdriver/?param=" + id;
+                    loc = require('electron').remote.app.getAppPath();
+                    console.log(loc);
+                    console.log("file://"+loc+"/index.html#!/editdriver/?param=" + id);
+                    window.location.href = "file://"+loc+"/index.html#!/editdriver/?param=" + id;
                 } else if (e.path[0].className == 'deleteDriver') {
                     var id = e.path[1].id;
                     deleteDriver(id);

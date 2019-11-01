@@ -32,7 +32,7 @@ app.on('ready', () => {
     );
 
     //Open Dev Tools
-    //mainWindow.webContents.openDevTools()
+    mainWindow.webContents.openDevTools()
 
     const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
     Menu.setApplicationMenu(mainMenu);
@@ -69,23 +69,23 @@ if (process.platform == "darwin") {
     })
 }
 
-// if (process.env.NODE_ENV !== "production") {
-//     mainMenuTemplate.push({
-//         label: "Dev Tools",
-//         submenu: [{
-//                 label: "Open Dev Tools",
-//                 click(item, focusedWindow) {
-//                     focusedWindow.toggleDevTools();
-//                 }
-//             },
-//             {
-//                 label: "Reload",
-//                 accelerator: process.platform == "darwin" ? "Command+R" : "Ctrl+R",
-//                 role: "reload"
-//             }
-//         ]
-//     })
-// }
+if (process.env.NODE_ENV !== "production") {
+    mainMenuTemplate.push({
+        label: "Dev Tools",
+        submenu: [{
+                label: "Open Dev Tools",
+                click(item, focusedWindow) {
+                    focusedWindow.toggleDevTools();
+                }
+            },
+            {
+                label: "Reload",
+                accelerator: process.platform == "darwin" ? "Command+R" : "Ctrl+R",
+                role: "reload"
+            }
+        ]
+    })
+}
 
 // Open New Page
 // function createWindow() {
